@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -8,27 +10,48 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+
+  late List showList=[];
+
+  getData() async {
+    var result = await http.get( Uri.parse('https://codingapple1.github.io/app/data.json') );
+    if (result.statusCode == 200) {
+       setState(() {
+        showList=jsonDecode(result.body);
+      });
+
+    } else {
+      throw Exception('실패함ㅅㄱ');
+    }
+
+  }
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getData();
+  }
+
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemCount: 3,
+      itemCount: showList.length,
       itemBuilder: (c, i) {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              color: Colors.grey,
-              height: 200,
+            Image.network(
+                showList[i]['image'],height:300,width: double.infinity,fit: BoxFit.cover,
             ),
             SizedBox(
               height: 15,
             ),
             Text(
-              '좋아요 ${i * 100}',
+              '좋아요 ${i * showList[i]['likes']}',
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
-            Text('글쓴이'),
-            Text('글내용'),
+            Text('${showList[i]['user'] }'),
+            Text('${showList[i]['content'] }'),
             SizedBox(
               height: 15,
             ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:instagram_copy/css/theme.dart';
 import 'package:instagram_copy/page/home.dart';
 
+
 void main() {
   runApp(
     MaterialApp(
