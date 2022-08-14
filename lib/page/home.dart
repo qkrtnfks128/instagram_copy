@@ -12,28 +12,26 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return ListView.builder(
       itemCount: 3,
-      itemBuilder: (c,i){
+      itemBuilder: (c, i) {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            for (int i = 0; i < 5; i++) ...[
-              Container(
-                color: Colors.grey,
-                height: 200,
-              ),
-              SizedBox(
-                height: 15,
-              ),
-              Text(
-                '좋아요 ${i * 100}',
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              Text('글쓴이'),
-              Text('글내용'),
-              SizedBox(
-                height: 15,
-              ),
-            ]
+            Container(
+              color: Colors.grey,
+              height: 200,
+            ),
+            SizedBox(
+              height: 15,
+            ),
+            Text(
+              '좋아요 ${i * 100}',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            Text('글쓴이'),
+            Text('글내용'),
+            SizedBox(
+              height: 15,
+            ),
           ],
         );
       },
