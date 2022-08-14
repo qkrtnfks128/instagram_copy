@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:instagram_copy/css/theme.dart';
+import 'package:instagram_copy/page/home.dart';
 
 void main() {
   runApp(
@@ -35,7 +36,7 @@ class _MyAppState extends State<MyApp> {
             ),
           ],
         ),
-        body:[Container(child:Text('홈')),Container(child:Text('샵'))][tab],
+        body:[Home(),Container(child:Text('샵'))][tab],
         bottomNavigationBar: BottomNavigationBar(
           showSelectedLabels: false,
           showUnselectedLabels: false,
