@@ -3,6 +3,8 @@ import 'package:instagram_copy/css/theme.dart';
 import 'package:instagram_copy/page/home.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+//스크롤 다룰때
+import 'package:flutter/rendering.dart';
 
 void main() {
   runApp(
@@ -24,13 +26,13 @@ class _MyAppState extends State<MyApp> {
   ///현재 탭의 상태
   int tab=0;
 
-  late List showList=[];
+  late List _showList=[];
 
   getData() async {
     var result = await http.get( Uri.parse('https://codingapple1.github.io/app/data.json') );
     if (result.statusCode == 200) {
       setState(() {
-        showList=jsonDecode(result.body);
+        _showList=jsonDecode(result.body);
       });
 
     } else {
@@ -38,7 +40,12 @@ class _MyAppState extends State<MyApp> {
     }
 
   }
-
+addList(e){
+    setState(() {
+      _showList..addAll(e);
+      print(_showList.length);
+    });
+}
   @override
   void initState() {
     // TODO: implement initState
@@ -60,7 +67,7 @@ class _MyAppState extends State<MyApp> {
             ),
           ],
         ),
-        body:[Home(data:showList),Container(child:Text('샵'))][tab],
+        body:[Home(data:_showList,getMoreList: (e){addList(e);}),Container(child:Text('샵'))][tab],
         bottomNavigationBar: BottomNavigationBar(
           showSelectedLabels: false,
           showUnselectedLabels: false,
