@@ -5,6 +5,11 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 //스크롤 다룰때
 import 'package:flutter/rendering.dart';
+import 'package:instagram_copy/page/upload.dart';
+//사진 가져오기
+import 'package:image_picker/image_picker.dart';
+//파일 다루는 함수가 들어있는 패키지
+import 'dart:io';
 
 void main() {
   runApp(
@@ -25,8 +30,8 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   ///현재 탭의 상태
   int tab=0;
-
   late List _showList=[];
+  var userImage;
 
   getData() async {
     var result = await http.get( Uri.parse('https://codingapple1.github.io/app/data.json') );
@@ -43,7 +48,6 @@ class _MyAppState extends State<MyApp> {
 addList(e){
     setState(() {
       _showList..addAll(e);
-      print(_showList.length);
     });
 }
   @override
@@ -62,8 +66,23 @@ addList(e){
           title: const Text('Instagram'),
           actions: [
             IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.email),
+              onPressed: () async{
+                ///이미지 선택화면 띄우는 코드
+                var picker = ImagePicker();
+                XFile? image = await picker.pickImage(source: ImageSource.gallery);
+                ///이미지 경로 저장
+                if(image!=null){
+                  setState(() {
+                    userImage=File(image.path);
+                  });
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (c)=>Upload(userImage:userImage))
+                  );
+                }
+
+
+              },
+              icon: const Icon(Icons.add_box_outlined),
             ),
           ],
         ),
