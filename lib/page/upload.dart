@@ -53,7 +53,10 @@ class _UploadState extends State<Upload> {
                     '망키');
 
                 print(addList.toJson());
-                // widget.getMoreList(_showMoreList);
+                List mapToList=[addList.toJson()];
+
+                widget.getMoreList(mapToList);
+                Navigator.pop(context);
               },
               icon: Icon(
                 Icons.send,

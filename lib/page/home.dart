@@ -63,7 +63,7 @@ class _HomeState extends State<Home> {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Image.network(
+                widget.data[i]['image'].runtimeType!=String? Image.file(widget.data[i]['image'],height:300,width: double.infinity,fit: BoxFit.cover,):Image.network(
                   widget.data[i]['image'],height:300,width: double.infinity,fit: BoxFit.cover,
                 ),
                 SizedBox(
