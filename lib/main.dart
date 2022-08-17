@@ -3,6 +3,7 @@ import 'package:instagram_copy/css/theme.dart';
 import 'package:instagram_copy/page/home.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
 
 //스크롤 다룰때
 import 'package:flutter/rendering.dart';
@@ -36,19 +37,43 @@ class _MyAppState extends State<MyApp> {
   late List _showList = [];
   var userImage;
 
-  getData() async {
-    var result = await http
-        .get(Uri.parse('https://codingapple1.github.io/app/data.json'));
-    if (result.statusCode == 200) {
-      setState(() {
-        _showList = jsonDecode(result.body);
-      });
-    } else {
-      throw Exception('실패함ㅅㄱ');
-    }
+  saveData(List data) async {
+    //저장공간세팅
+    var storage = await SharedPreferences.getInstance();
+    //이렇게 저장이 된다
+    storage.setString('map', jsonEncode(data));
+    var result =storage.getString('map')??'저장된 데이터 없음';
+    //삭제
+    // storage.remove('key');
+    print(result);
   }
 
-  addList(e) {
+  getData() async {
+    var storage = await SharedPreferences.getInstance();
+    if(storage.getString('map')==null){
+      var result = await http
+          .get(Uri.parse('https://codingapple1.github.io/app/data.json'));
+      if (result.statusCode == 200) {
+        saveData( jsonDecode(result.body));
+        setState(() {
+          _showList = jsonDecode(result.body);
+        });
+      } else {
+        throw Exception('실패함ㅅㄱ');
+      }
+    }
+    else{
+      setState(() {
+        _showList = jsonDecode(storage.getString('map')!);
+      });
+
+    }
+
+  }
+
+  addList(List e) async{
+    var storage =  await SharedPreferences.getInstance();
+    storage.setString('map', jsonEncode(e));
     setState(() {
       print(e);
       _showList..addAll(e);
@@ -59,6 +84,7 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     // TODO: implement initState
     super.initState();
+
     getData();
   }
 
@@ -86,12 +112,11 @@ class _MyAppState extends State<MyApp> {
                     context,
                     MaterialPageRoute(
                       builder: (c) => Upload(
-                        userImage: userImage,
-                        getMoreList: (e) {
-                          addList(e);
-                        },
-                        lastIndex:_showList.length.toString()
-                      ),
+                          userImage: userImage,
+                          getMoreList: (e) {
+                            addList(e);
+                          },
+                          lastIndex: _showList.length.toString()),
                     ),
                   );
                 }

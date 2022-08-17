@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+
 class Upload extends StatefulWidget {
   Upload(
       {Key? key,
@@ -52,7 +53,6 @@ class _UploadState extends State<Upload> {
                     false,
                     '망키');
 
-                print(addList.toJson());
                 List mapToList=[addList.toJson()];
 
                 widget.getMoreList(mapToList);
@@ -78,14 +78,9 @@ class _UploadState extends State<Upload> {
                 SizedBox(height: 20),
                 TextFormField(
                   controller: inputController,
-                  onChanged: (text) {
-                    setState(() {
-                      inputController.text = text;
-                    });
-                  },
                   decoration: InputDecoration(
                       enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(12)),
+                          borderRadius: BorderRadius.all(Radius.circular(4)),
                           borderSide: BorderSide(color: Colors.grey))),
                 ),
               ],
