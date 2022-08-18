@@ -1,17 +1,18 @@
+
 import 'package:flutter/material.dart';
-
-
+import 'dart:io';
 class Upload extends StatefulWidget {
-  Upload(
+  const Upload(
       {Key? key,
-      required this.userImage,
+      required this.userImagePath,
       required this.getMoreList,
       required this.lastIndex})
       : super(key: key);
 
-  final userImage;
+  final String userImagePath;
   final Function(List) getMoreList;
   final String lastIndex;
+
 
   @override
   State<Upload> createState() => _UploadState();
@@ -20,10 +21,12 @@ class Upload extends StatefulWidget {
 class _UploadState extends State<Upload> {
   final TextEditingController inputController = TextEditingController();
 
+  late File userImage;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    userImage=File(widget.userImagePath);
     inputController.text = '';
   }
 
@@ -35,7 +38,7 @@ class _UploadState extends State<Upload> {
             onPressed: () {
               Navigator.pop(context);
             },
-            icon: Icon(
+            icon: const Icon(
               Icons.close,
               color: Colors.black87,
             ),
@@ -44,9 +47,10 @@ class _UploadState extends State<Upload> {
             IconButton(
               onPressed: () {
                 print('저장하기');
+                // print(widget.userImage);
                 UploadValue addList = UploadValue(
                     widget.lastIndex,
-                    widget.userImage,
+                    widget.userImagePath,
                     0,
                     'May 5',
                     inputController.text,
@@ -58,7 +62,7 @@ class _UploadState extends State<Upload> {
                 widget.getMoreList(mapToList);
                 Navigator.pop(context);
               },
-              icon: Icon(
+              icon: const Icon(
                 Icons.send,
                 color: Colors.black87,
               ),
@@ -74,11 +78,11 @@ class _UploadState extends State<Upload> {
                 SizedBox(
                     width: double.infinity,
                     height: 300,
-                    child: Image.file(widget.userImage, fit: BoxFit.cover)),
-                SizedBox(height: 20),
+                    child: Image.file(userImage, fit: BoxFit.cover)),
+                const SizedBox(height: 20),
                 TextFormField(
                   controller: inputController,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                       enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(4)),
                           borderSide: BorderSide(color: Colors.grey))),

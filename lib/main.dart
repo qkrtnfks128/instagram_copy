@@ -36,24 +36,26 @@ class _MyAppState extends State<MyApp> {
   int tab = 0;
   late List _showList = [];
   var userImage;
+  //저장공간
+  late var storage;
 
   saveData(List data) async {
-    //저장공간세팅
-    var storage = await SharedPreferences.getInstance();
     //이렇게 저장이 된다
     storage.setString('map', jsonEncode(data));
-    var result =storage.getString('map')??'저장된 데이터 없음';
+    var result =storage.getString('map');
     //삭제
     // storage.remove('key');
     print(result);
   }
 
   getData() async {
-    var storage = await SharedPreferences.getInstance();
+     storage = await SharedPreferences.getInstance();
+
     if(storage.getString('map')==null){
       var result = await http
           .get(Uri.parse('https://codingapple1.github.io/app/data.json'));
       if (result.statusCode == 200) {
+        ///cache저장
         saveData( jsonDecode(result.body));
         setState(() {
           _showList = jsonDecode(result.body);
@@ -63,21 +65,25 @@ class _MyAppState extends State<MyApp> {
       }
     }
     else{
-      setState(() {
-        _showList = jsonDecode(storage.getString('map')!);
-      });
+
 
     }
+    setState(() {
+      _showList = jsonDecode(storage.getString('map')!);
+    });
+    print(storage.getString('map'));
 
   }
 
-  addList(List e) async{
-    var storage =  await SharedPreferences.getInstance();
-    storage.setString('map', jsonEncode(e));
+  addList(e) {
     setState(() {
-      print(e);
       _showList..addAll(e);
     });
+    if(e.runtimeType==File){
+      print('파일형식입니다');
+    }
+    storage.setString('map', jsonEncode(_showList));
+    print(storage.getString('map'));
   }
 
   @override
@@ -107,12 +113,13 @@ class _MyAppState extends State<MyApp> {
                 if (image != null) {
                   setState(() {
                     userImage = File(image.path);
+                    userImage = image.path;
                   });
                   Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (c) => Upload(
-                          userImage: userImage,
+                          userImagePath: userImage,
                           getMoreList: (e) {
                             addList(e);
                           },
