@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:instagram_copy/controller/routepage_controller.dart';
 import 'package:instagram_copy/page/home.dart';
 import 'package:get/get.dart';
+import 'package:instagram_copy/page/profilepage.dart';
 
 
 
@@ -17,26 +18,17 @@ class RoutePage extends StatelessWidget {
     return Obx(()=>
         SafeArea(
           child: Scaffold(
-            appBar: AppBar(
-              centerTitle: true,
-              title: const Text('Instagram'),
-              actions: [
-                    IconButton(
-                      onPressed: ()  {
-                        _pageController.addImg();
-                      },
-                      icon: const Icon(Icons.add_box_outlined),
-                    ),
-              ],
-            ),
             body: [
               const Home(),
-              const Text('샵')
+              const Text('샵'),
+              const ProfilePage(),
             ][_pageController.tabIndex.value],
             bottomNavigationBar: BottomNavigationBar(
               showSelectedLabels: false,
               showUnselectedLabels: false,
-              selectedItemColor: Colors.black87,
+              selectedItemColor: Colors.black,
+              unselectedItemColor: Colors.black26,
+              currentIndex: _pageController.tabIndex.value,
               onTap: (i) {
                 _pageController.tabIndex.value = i;
               },
@@ -46,6 +38,10 @@ class RoutePage extends StatelessWidget {
                 BottomNavigationBarItem(
                     icon: Icon(Icons.shopping_bag_outlined),
                     label: '샵',
+                    tooltip: ''),
+                BottomNavigationBarItem(
+                    icon: Icon(Icons.person_outline),
+                    label: '프로필',
                     tooltip: ''),
               ],
             ),

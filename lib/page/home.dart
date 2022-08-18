@@ -19,41 +19,54 @@ class Home extends StatelessWidget {
     final  _routePageController=Get.find<RoutePageController>();
 
     if (_routePageController.showList.isNotEmpty) {
-      return Obx(()=>ListView.builder(
-        controller: _pageController.scrollController,
-        itemCount: _routePageController.showList.length,
-        itemBuilder: (c, i) {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _routePageController.showList[i]['image'].contains('https://')
-                  ? CachedNetworkImage(
-                imageUrl: _routePageController.showList[i]['image'],
-                height: 300,
-                width: double.infinity,
-                fit: BoxFit.cover,
-              )
-                  : Image.file(File(_routePageController.showList[i]['image']),
-                height: 300,
-                width: double.infinity,
-                fit: BoxFit.cover,
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              Text(
-                '좋아요 ${_routePageController.showList[i]['likes']}',
-                style: const TextStyle(fontWeight: FontWeight.bold),
-              ),
-              Text('${_routePageController.showList[i]['user']}'),
-              Text('${_routePageController.showList[i]['content']}'),
-              const SizedBox(
-                height: 15,
-              ),
-            ],
-          );
-        },
-      ));
+      return  Scaffold(
+        appBar: AppBar(
+          title: const Text('Instagram'),
+          actions: [
+            IconButton(
+              onPressed: ()  {
+                _routePageController.addImg();
+              },
+              icon: const Icon(Icons.add_box_outlined),
+            ),
+          ],
+        ),
+        body: Obx(()=>ListView.builder(
+          controller: _pageController.scrollController,
+          itemCount: _routePageController.showList.length,
+          itemBuilder: (c, i) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _routePageController.showList[i]['image'].contains('https://')
+                    ? CachedNetworkImage(
+                  imageUrl: _routePageController.showList[i]['image'],
+                  height: 300,
+                  width: double.infinity,
+                  fit: BoxFit.cover,
+                )
+                    : Image.file(File(_routePageController.showList[i]['image']),
+                  height: 300,
+                  width: double.infinity,
+                  fit: BoxFit.cover,
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                Text(
+                  '좋아요 ${_routePageController.showList[i]['likes']}',
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                ),
+                Text('${_routePageController.showList[i]['user']}'),
+                Text('${_routePageController.showList[i]['content']}'),
+                const SizedBox(
+                  height: 15,
+                ),
+              ],
+            );
+          },
+        )),
+      );
     } else {
       return const Center(
           child: Padding(
