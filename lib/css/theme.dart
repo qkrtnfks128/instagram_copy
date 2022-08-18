@@ -4,9 +4,11 @@ final ThemeData myTheme=ThemeData(
   //앱바 테마
     appBarTheme: AppBarTheme(
         color:Colors.white,
+        iconTheme: IconThemeData(color: Colors.black87),
         elevation: 1,
         titleTextStyle: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 25),
-        actionsIconTheme: IconThemeData(color:Colors.black87)
+        actionsIconTheme: IconThemeData(color:Colors.black87),
+
     ),
     //텍스트테마
     textTheme: TextTheme(
