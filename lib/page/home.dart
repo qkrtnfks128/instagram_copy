@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:instagram_copy/page/profilepage.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -57,7 +58,11 @@ class Home extends StatelessWidget {
                   '좋아요 ${_routePageController.showList[i]['likes']}',
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
-                Text('${_routePageController.showList[i]['user']}'),
+                GestureDetector(
+                    onTap: (){
+                      Get.toNamed('/userProfile');
+                    },
+                    child: Text('${_routePageController.showList[i]['user']}')),
                 Text('${_routePageController.showList[i]['content']}'),
                 const SizedBox(
                   height: 15,

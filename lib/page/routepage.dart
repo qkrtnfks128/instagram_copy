@@ -21,7 +21,6 @@ class RoutePage extends StatelessWidget {
             body: [
               const Home(),
               const Text('샵'),
-              const ProfilePage(),
             ][_pageController.tabIndex.value],
             bottomNavigationBar: BottomNavigationBar(
               showSelectedLabels: false,
@@ -39,10 +38,10 @@ class RoutePage extends StatelessWidget {
                     icon: Icon(Icons.shopping_bag_outlined),
                     label: '샵',
                     tooltip: ''),
-                BottomNavigationBarItem(
-                    icon: Icon(Icons.person_outline),
-                    label: '프로필',
-                    tooltip: ''),
+                // BottomNavigationBarItem(
+                //     icon: Icon(Icons.person_outline),
+                //     label: '프로필',
+                //     tooltip: ''),
               ],
             ),
           ),
