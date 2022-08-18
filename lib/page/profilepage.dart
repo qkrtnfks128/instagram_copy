@@ -19,24 +19,51 @@ class ProfilePage extends StatelessWidget{
      ),
      body:Column(
        children: [
-         Padding(
-           padding: const EdgeInsets.symmetric(vertical:8.0),
-           child: Row(
-             mainAxisAlignment: MainAxisAlignment.spaceAround,
-             children: [
-               CircleAvatar(backgroundColor: Colors.red,radius: 25,),
-               Obx(()=>Text('팔로워 ${_myprofileController.follower.toString()}명')),
-               TextButton(onPressed: (){
-                 _myprofileController.addFollower();
-               }, child: Text('팔로우'))
-             ],
+         ProfileHeader(),
+         GridView.builder(
+           shrinkWrap: true,
+           itemCount: _myprofileController.profileImage.length,
+           gridDelegate:const SliverGridDelegateWithFixedCrossAxisCount(
+             crossAxisCount: 3, //1 개의 행에 보여줄 item 개수
+             childAspectRatio: 1 / 1, //item 의 가로 1, 세로 1 의 비율
+             mainAxisSpacing: 10, //수평 Padding
+             crossAxisSpacing: 10, //수직 Padding
            ),
-         ),
-         Text('프로필페이지'),
+           itemBuilder: (BuildContext context,int index){
+             // return Text(index.toString());
+             return  Image.network(_myprofileController.profileImage.value[index],height: 200,);
+           },
+         )
        ],
      )
    );
   }
 
 
+}
+
+class ProfileHeader extends StatelessWidget {
+  final _myprofileController=Get.find<MyProfile>();
+
+   ProfileHeader({
+    Key? key,
+  }) :  super(key: key);
+
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical:8.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          CircleAvatar(backgroundColor: Colors.red,radius: 25,),
+          Obx(()=>Text('팔로워 ${_myprofileController.follower.toString()}명')),
+          TextButton(onPressed: (){
+            _myprofileController.followClick();
+          }, child: Text('팔로우'))
+        ],
+      ),
+    );
+  }
 }
