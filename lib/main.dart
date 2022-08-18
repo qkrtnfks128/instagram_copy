@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:instagram_copy/css/theme.dart';
 import 'package:instagram_copy/page/home.dart';
 import 'package:http/http.dart' as http;
+import 'package:instagram_copy/system/cache_clear.dart';
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -16,6 +17,7 @@ import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
 void main() {
+  CustomImageCache();
   runApp(
     MaterialApp(
       home: MyApp(),
