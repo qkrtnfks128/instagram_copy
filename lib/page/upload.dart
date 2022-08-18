@@ -1,37 +1,15 @@
-
+import 'package:get/get.dart';
 import 'package:flutter/material.dart';
-import 'dart:io';
-class Upload extends StatefulWidget {
-  const Upload(
-      {Key? key,
-      required this.userImagePath,
-      required this.getMoreList,
-      required this.lastIndex})
-      : super(key: key);
+import '../controller/upload_controller.dart';
 
-  final String userImagePath;
-  final Function(List) getMoreList;
-  final String lastIndex;
+class Upload extends StatelessWidget {
+  const Upload({Key? key}) : super(key: key);
 
-
-  @override
-  State<Upload> createState() => _UploadState();
-}
-
-class _UploadState extends State<Upload> {
-  final TextEditingController inputController = TextEditingController();
-
-  late File userImage;
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    userImage=File(widget.userImagePath);
-    inputController.text = '';
-  }
 
   @override
   Widget build(BuildContext context) {
+    final _pageController= Get.find<UploadController>();
+
     return Scaffold(
         appBar: AppBar(
           leading: IconButton(
@@ -44,28 +22,31 @@ class _UploadState extends State<Upload> {
             ),
           ),
           actions: [
-            IconButton(
-              onPressed: () {
-                print('저장하기');
-                // print(widget.userImage);
-                UploadValue addList = UploadValue(
-                    widget.lastIndex,
-                    widget.userImagePath,
-                    0,
-                    'May 5',
-                    inputController.text,
-                    false,
-                    '망키');
+            GetBuilder<UploadController>(
+              init:UploadController(),
+              builder: (controller) {
+                return IconButton(
+                  onPressed: () {
+                    print('저장하기');
+                    UploadValue addList = UploadValue(
+                        controller.lastIndex.value,
+                        controller.beforeController.userImagePath.value,
+                        0,
+                        'May 5',
+                        controller.inputController.value.text,
+                        false,
+                        '망키');
 
-                List mapToList=[addList.toJson()];
-
-                widget.getMoreList(mapToList);
-                Navigator.pop(context);
-              },
-              icon: const Icon(
-                Icons.send,
-                color: Colors.black87,
-              ),
+                    List mapToList=[addList.toJson()];
+                    controller.beforeController.addList(mapToList);
+                    Get.back();
+                  },
+                  icon: const Icon(
+                    Icons.send,
+                    color: Colors.black87,
+                  ),
+                );
+              }
             ),
           ],
         ),
@@ -78,15 +59,17 @@ class _UploadState extends State<Upload> {
                 SizedBox(
                     width: double.infinity,
                     height: 300,
-                    child: Image.file(userImage, fit: BoxFit.cover)),
+                    child: Obx(()=>Image.file(_pageController.userImage.value, fit: BoxFit.cover))),
                 const SizedBox(height: 20),
-                TextFormField(
-                  controller: inputController,
-                  decoration: const InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(4)),
-                          borderSide: BorderSide(color: Colors.grey))),
-                ),
+                Obx(()=>
+                    TextFormField(
+                      controller: _pageController.inputController.value,
+                      decoration: const InputDecoration(
+                          enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(Radius.circular(4)),
+                              borderSide: BorderSide(color: Colors.grey))),
+                    ),
+                )
               ],
             ),
           ),
