@@ -22,7 +22,7 @@ class RoutePage extends StatelessWidget {
           child: Scaffold(
             body: [
               const Home(),
-              const ShopPage(),
+               ShopPage(),
             ][_pageController.tabIndex.value],
             bottomNavigationBar: BottomNavigationBar(
               showSelectedLabels: false,
