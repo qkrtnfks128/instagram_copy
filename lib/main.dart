@@ -9,6 +9,7 @@ import 'package:instagram_copy/system/cache_clear.dart';
 import 'package:http/http.dart' as http;
 
 void main() {
+
   CustomImageCache();
   Get.put(MyProfile());
   runApp(
@@ -19,7 +20,11 @@ void main() {
         GetPage(
             name: '/userProfile',
             page: () => ProfilePage(),
-            transition: Transition.rightToLeft)
+            transition: Transition.rightToLeft),
+        GetPage(
+            name: '/routePage',
+            page: () => RoutePage(),
+            transition: Transition.fadeIn)
       ],
     ),
   );

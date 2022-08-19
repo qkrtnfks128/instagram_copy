@@ -4,6 +4,8 @@ import 'package:instagram_copy/controller/routepage_controller.dart';
 import 'package:instagram_copy/page/home.dart';
 import 'package:get/get.dart';
 import 'package:instagram_copy/page/profilepage.dart';
+import 'package:instagram_copy/page/shoppage.dart';
+import 'package:instagram_copy/system/notification.dart';
 
 
 
@@ -20,7 +22,7 @@ class RoutePage extends StatelessWidget {
           child: Scaffold(
             body: [
               const Home(),
-              const Text('샵'),
+              const ShopPage(),
             ][_pageController.tabIndex.value],
             bottomNavigationBar: BottomNavigationBar(
               showSelectedLabels: false,
@@ -43,6 +45,11 @@ class RoutePage extends StatelessWidget {
                 //     label: '프로필',
                 //     tooltip: ''),
               ],
+            ),
+            floatingActionButton: FloatingActionButton(
+              onPressed: (){
+                showNotification2();
+              },child: Icon(Icons.add,color: Colors.white,),
             ),
           ),
         )

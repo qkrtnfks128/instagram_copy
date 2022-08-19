@@ -9,6 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../page/upload.dart';
+import '../system/notification.dart';
 
 class RoutePageController extends GetxController{
   ///현재 탭의 위치
@@ -78,6 +79,7 @@ class RoutePageController extends GetxController{
     // TODO: implement onInit
     super.onInit();
     getData();
+    initNotification();
   }
 
 }
