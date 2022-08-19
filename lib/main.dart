@@ -8,9 +8,19 @@ import 'package:instagram_copy/page/routepage.dart';
 import 'package:instagram_copy/system/cache_clear.dart';
 import 'package:http/http.dart' as http;
 
-void main() {
+//firebase
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
+void main() async{
   CustomImageCache();
+
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
+
   Get.put(MyProfile());
   runApp(
     GetMaterialApp(
