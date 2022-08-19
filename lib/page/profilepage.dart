@@ -23,15 +23,12 @@ class ProfilePage extends StatelessWidget {
               child: ProfileHeader(),
             ),
             SliverGrid(
-              delegate: SliverChildListDelegate([
-                for (int i = 0;
-                    i < _myprofileController.profileImage.length;
-                    i++)
-                  Image.network(
+              delegate: SliverChildBuilderDelegate(
+                  (c,i)=>Image.network(
                     _myprofileController.profileImage[i],
                     height: 200,
-                  )
-              ]),
+                  ),childCount:_myprofileController.profileImage.length
+              ),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 3, //1 개의 행에 보여줄 item 개수
                 childAspectRatio: 1 / 1, //item 의 가로 1, 세로 1 의 비율
