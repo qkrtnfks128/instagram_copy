@@ -9,7 +9,7 @@ class ShopPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _controller=Get.put(ShopPageController());
+    final _controller = Get.put(ShopPageController());
     return Text('샵');
   }
 }
