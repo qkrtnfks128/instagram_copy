@@ -1,6 +1,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:instagram_copy/controller/routepage_controller.dart';
+import 'package:instagram_copy/page/circle_animation.dart';
+import 'package:instagram_copy/page/chart.dart';
 import 'package:instagram_copy/page/home.dart';
 import 'package:get/get.dart';
 import 'package:instagram_copy/page/profilepage.dart';
@@ -23,6 +25,9 @@ class RoutePage extends StatelessWidget {
             body: [
               const Home(),
                ShopPage(),
+              ChartPage(),
+              CircleAnimationPage()
+
             ][_pageController.tabIndex.value],
             bottomNavigationBar: BottomNavigationBar(
               showSelectedLabels: false,
@@ -39,6 +44,14 @@ class RoutePage extends StatelessWidget {
                 BottomNavigationBarItem(
                     icon: Icon(Icons.shopping_bag_outlined),
                     label: '샵',
+                    tooltip: ''),
+                BottomNavigationBarItem(
+                    icon: Icon(Icons.circle),
+                    label: '차트',
+                    tooltip: ''),
+                BottomNavigationBarItem(
+                    icon: Icon(Icons.circle),
+                    label: '애니메이션',
                     tooltip: ''),
                 // BottomNavigationBarItem(
                 //     icon: Icon(Icons.person_outline),

@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:instagram_copy/main.dart';
+import 'package:instagram_copy/page/routepage.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
